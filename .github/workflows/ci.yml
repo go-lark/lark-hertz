@@ -22,16 +22,13 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-go-
 
-    - name: run
+    - name: setup
       uses: actions/setup-go@v3
       with:
         go-version: "1.18"
 
     - name: lint
-      run: |
-        export PATH=$PATH:$(go env GOPATH)/bin
-        go get github.com/mgechev/revive@master
-        revive -set_exit_status ./...
+      uses: morphy2k/revive-action@v2
 
     - name: build
       run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
