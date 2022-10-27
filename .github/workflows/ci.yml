@@ -1,25 +1,37 @@
 name: build
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 jobs:
   checks:
     name: run
     runs-on: ubuntu-latest
     steps:
     - name: checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v3
+
+    - name: cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
 
     - name: run
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v3
       with:
-        go-version: "1.13"
-      env:
-        GO111MODULE: "on"
+        go-version: "1.18"
 
     - name: lint
       run: |
         export PATH=$PATH:$(go env GOPATH)/bin
-        go get -u golang.org/x/lint/golint
-        golint -set_exit_status ./...
+        go get github.com/mgechev/revive@master
+        revive -set_exit_status ./...
 
     - name: build
       run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...

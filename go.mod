@@ -1,6 +1,6 @@
 module github.com/go-lark/lark-hertz
 
-go 1.19
+go 1.18
 
 require (
 	github.com/cloudwego/hertz v0.3.2
