@@ -1,0 +1,30 @@
+name: build
+on: [push, pull_request]
+jobs:
+  checks:
+    name: run
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+
+    - name: run
+      uses: actions/setup-go@v2
+      with:
+        go-version: "1.13"
+      env:
+        GO111MODULE: "on"
+
+    - name: lint
+      run: |
+        export PATH=$PATH:$(go env GOPATH)/bin
+        go get -u golang.org/x/lint/golint
+        golint -set_exit_status ./...
+
+    - name: build
+      run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
+
+    - name: codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
