@@ -22,7 +22,7 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
-	"github.com/go-lark/lark-hertz/v3"
+	"github.com/go-lark/lark-hertz"
 )
 
 func main() {
