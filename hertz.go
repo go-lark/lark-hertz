@@ -78,7 +78,7 @@ func (opt *LarkMiddleware) GetMessage(c *app.RequestContext) (msg *lark.EventMes
 }
 
 // GetEvent should call GetEvent if you're using EventV2
-func (opt LarkMiddleware) GetEvent(c *app.RequestContext) (*lark.EventV2, bool) {
+func (opt *LarkMiddleware) GetEvent(c *app.RequestContext) (*lark.EventV2, bool) {
 	if message, ok := c.Get(opt.messageKey); ok {
 		event, ok := message.(lark.EventV2)
 		if event.Schema != "2.0" {
@@ -91,7 +91,7 @@ func (opt LarkMiddleware) GetEvent(c *app.RequestContext) (*lark.EventV2, bool) 
 }
 
 // LarkEventHandler handle lark event v2
-func (opt LarkMiddleware) LarkEventHandler() app.HandlerFunc {
+func (opt *LarkMiddleware) LarkEventHandler() app.HandlerFunc {
 	return func(c context.Context, ctx *app.RequestContext) {
 		defer ctx.Next(c)
 
