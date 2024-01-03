@@ -65,4 +65,4 @@ middleware.BindURLPrefix("/abc")
 
 ## About
 
-Copyright (c) go-lark Developers, 2018-2022.
+Copyright (c) go-lark Developers, 2018-2024.
