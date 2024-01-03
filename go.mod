@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/cloudwego/hertz v0.3.2
-	github.com/go-lark/lark v1.7.3
+	github.com/go-lark/lark v1.13.3
 	github.com/stretchr/testify v1.8.1
 )
 
