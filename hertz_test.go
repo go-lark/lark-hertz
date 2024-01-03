@@ -25,7 +25,8 @@ func TestLarkMiddleware(t *testing.T) {
 	assert.Empty(t, lm.verificationToken)
 	assert.False(t, lm.enableURLBinding)
 	assert.Empty(t, lm.urlPrefix)
-	assert.Equal(t, DefaultLarkMessageKey, lm.messageKey)
+	assert.Equal(t, defaultLarkMessageKey, lm.messageKey)
+	assert.Equal(t, defaultLarkCardKey, lm.cardKey)
 
 	lm.SetMessageKey("aaa")
 	assert.Equal(t, "aaa", lm.messageKey)
