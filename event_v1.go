@@ -9,13 +9,6 @@ import (
 	"github.com/go-lark/lark"
 )
 
-// SetMessageKey .
-func (opt *LarkMiddleware) SetMessageKey(key string) *LarkMiddleware {
-	opt.messageKey = key
-
-	return opt
-}
-
 // GetMessage from hertz context
 func (opt *LarkMiddleware) GetMessage(c *app.RequestContext) (msg *lark.EventMessage, ok bool) {
 	if message, ok := c.Get(opt.messageKey); ok {

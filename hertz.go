@@ -6,12 +6,19 @@ import (
 	"github.com/go-lark/lark"
 )
 
-// DefaultLarkMessageKey still public for compatibility
+// DefaultLarkMessageKey compat legacy versions
+// not use in this repo right now
 const DefaultLarkMessageKey = "go-lark-message"
+
+const (
+	defaultLarkMessageKey = "go-lark-message"
+	defaultLarkCardKey    = "go-lark-card"
+)
 
 // LarkMiddleware .
 type LarkMiddleware struct {
 	messageKey string
+	cardKey    string
 
 	enableTokenVerification bool
 	verificationToken       string
@@ -26,7 +33,8 @@ type LarkMiddleware struct {
 // NewLarkMiddleware .
 func NewLarkMiddleware() *LarkMiddleware {
 	return &LarkMiddleware{
-		messageKey: DefaultLarkMessageKey,
+		messageKey: defaultLarkMessageKey,
+		cardKey:    defaultLarkCardKey,
 	}
 }
 
@@ -50,6 +58,20 @@ func (opt *LarkMiddleware) WithEncryption(key string) *LarkMiddleware {
 func (opt *LarkMiddleware) BindURLPrefix(prefix string) *LarkMiddleware {
 	opt.enableURLBinding = true
 	opt.urlPrefix = prefix
+
+	return opt
+}
+
+// SetMessageKey .
+func (opt *LarkMiddleware) SetMessageKey(key string) *LarkMiddleware {
+	opt.messageKey = key
+
+	return opt
+}
+
+// SetCardKey .
+func (opt *LarkMiddleware) SetCardKey(key string) *LarkMiddleware {
+	opt.cardKey = key
 
 	return opt
 }
