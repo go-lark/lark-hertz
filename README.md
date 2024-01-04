@@ -44,7 +44,7 @@ func main() {
     {
         eventGroup.Use(middleware.LarkEventHandler())
         eventGroup.POST("/", func(c context.Context, ctx *app.RequestContext) {
-            if event, ok := middleware.GetEvent(e); ok { // => returns `*lark.EventV2`
+            if event, ok := middleware.GetEvent(ctx); ok { // => returns `*lark.EventV2`
             }
         })
     }
@@ -54,7 +54,7 @@ func main() {
     {
         cardGroup.Use(middleware.LarkCardHandler())
         cardGroup.POST("/callback", func(c context.Context, ctx *app.RequestContext) {
-            if card, ok := middleware.GetCardCallback(c); ok { // => returns `*lark.EventCardCallback`
+            if card, ok := middleware.GetCardCallback(ctx); ok { // => returns `*lark.EventCardCallback`
             }
         })
     }
@@ -75,8 +75,7 @@ r.Use(middleware.LarkEventHandler())
 Get the event (e.g. Message):
 ```go
 r.POST("/", func(c context.Context, ctx *app.RequestContext) {
-    event, ok = middleware.GetEvent(ctx)
-    if evt, ok := middleware.GetEvent(c); ok { // => GetEvent instead of GetMessage
+    if event, ok := middleware.GetEvent(ctx); ok { // => GetEvent instead of GetMessage
         if evt.Header.EventType == lark.EventTypeMessageReceived {
             if msg, err := evt.GetMessageReceived(); err == nil {
                 fmt.Println(msg.Message.Content)
